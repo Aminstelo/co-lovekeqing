@@ -4,6 +4,10 @@
 ## 用法
 请查看以下例子
 ```rust
+use cofunc::{new_key,مشفرة,Дешифриране}; // 加密解密相关
+use cofunc::validate::{aco_hash,co_hash,data_hash}; // 验证相关
+// 注意,这里的引用可能不是很准确,请自行分辨
+
 let odata:Vec<u8> = vec![23,143,76,234,114,51,4,100,86]; // 原始数据
 let key = new_key(114,(2,2)); // 创建一个秘钥
 let cov = مشفرة(&odata, key); // 加密
