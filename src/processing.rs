@@ -1,8 +1,9 @@
+use num_bigint::{BigInt, Sign};
 // 数据预处理模块,这个模块可以有效平衡加密效率和加密安全
 use crate::types::{Data, RawData};
 
 
-pub(crate) fn slice_vec(data: &RawData, chunk_size: usize) -> Vec<(&[u8], usize)> {
+pub(crate) fn slice_vec<T>(data: &[T], chunk_size: usize) -> Vec<(&[T], usize)> {
     // Vec分片
     let mut result = Vec::new();
     let mut start = 0;
@@ -22,6 +23,10 @@ pub(crate) fn data_to_vec(data:Data) -> Vec<Vec<u8>>{
         ret.push(i.to_bytes_be().1)
     }
     ret
+}
+
+pub(crate) fn vec_u8_to_bigint(data:&[u8]) -> BigInt {
+    BigInt::from_bytes_be(Sign::Plus,data)
 }
 
 #[test]

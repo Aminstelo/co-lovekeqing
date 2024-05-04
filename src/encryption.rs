@@ -4,7 +4,7 @@ use crate::cofunc_bigint::aco as cofunc_aco;
 use crate::rand_sha3::{get_func};
 use crate::types::{Key,Data};
 
-pub(crate) fn co(data:Data, key:Key) -> Data {
+pub(crate) fn co(data:&Data, key:Key) -> Data {
     let mut ret = vec![];
     let hash_func = get_func(&key.0,key.1);
     for i in 0..data.len(){
@@ -13,7 +13,7 @@ pub(crate) fn co(data:Data, key:Key) -> Data {
     ret
 }
 
-pub(crate) fn aco(cov : Data,key:Key) -> Data {
+pub(crate) fn aco(cov :&Data,key:Key) -> Data {
     let mut ret = vec![];
     let hash_func = get_func(&key.0,key.1);
     for i in 0..cov.len(){
@@ -30,9 +30,9 @@ fn co_and_aco(){
     for i in 0..original_bytes.len(){
         new_bytes.push(BigInt::from(original_bytes[i]));
     }
-    let key = (generate_random_hash_key(),1145u64);
-    let n1 = co(new_bytes,key);
-    let n2 = aco(n1,key);
+    let key = (generate_random_hash_key(),1145u64,1);
+    let n1 = co(&new_bytes,key);
+    let n2 = aco(&n1,key);
     println!("{:?},{:?}",n2,original_bytes);
 }
 
