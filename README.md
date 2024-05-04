@@ -17,3 +17,4 @@ let n1 = aco_hash(odata_hash,key); // 使用原数据的hash值和秘钥获得�
 let n2 = co_hash(&cov,key.1); // 使用加密后的数据和对odata_hash进行hash运算的hash函数的模数获得用于验证的hash值
 assert_eq!(n1,n2) // 加密前数据的hash值和源数据一致
 ```
+![Alt Test](/images/wallhaven-9m9me8.jpg)
