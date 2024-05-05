@@ -1,6 +1,6 @@
 use sha3::digest::HashMarker;
 use crate::rand_sha3::generate_random_hash_key;
-use crate::types::{BigIntRef, Data, Key, RawData};
+use crate::types::{BigIntRef, Data, Key, RawData,VerificationHashModulus};
 use num_bigint::{BigInt,Sign};
 use crate::processing::{vec_u8_to_bigint};
 use crate::encryption::{aco,co};
@@ -58,9 +58,13 @@ fn test(){
     let acov = Дешифриране(&cov,key);
     println!("加密后:{:?},解密后:{:?}", cov, acov);
     assert_eq!(odata, acov);
+
+    /* 以下是验证部分 */
+
     use crate::validate::{aco_hash,co_hash,data_hash};
     // 可以用这种方法验证数据
-    let n1 = aco_hash(data_hash(&odata, key.2, key.1),key);
-    let n2 = co_hash(&cov,key.1);
+    let verification_hash_modulus = VerificationHashModulus::from_be(114); // 创建验证hash模数
+    let n1 = aco_hash(data_hash(&odata, key.2,verification_hash_modulus),key,verification_hash_modulus);
+    let n2 = co_hash(&cov,verification_hash_modulus);
     assert_eq!(n1,n2)
 }

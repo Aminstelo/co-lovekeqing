@@ -5,6 +5,7 @@ use sha3::{Sha3_256, Digest};
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use num_bigint::{BigInt};
+use crate::types::{HashFuncKey,HashModulus};
 
 pub(crate) fn hash<T: Hash>(t: &T) -> u64 {
     let mut s = DefaultHasher::new();
@@ -12,7 +13,7 @@ pub(crate) fn hash<T: Hash>(t: &T) -> u64 {
     s.finish()
 }
 
-pub(crate) fn get_func(key : &[u8;32], hash_m : u64) ->  impl Fn(&Vec<u8>) -> BigInt {
+pub(crate) fn get_func(key : &HashFuncKey, hash_m : HashModulus) ->  impl Fn(&Vec<u8>) -> BigInt {
     let mut hasher = Sha3_256::new();
     hasher.update(key);
     let hash1 = hasher.finalize();
